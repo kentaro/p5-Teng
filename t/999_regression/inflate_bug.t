@@ -18,4 +18,13 @@ subtest "update() doesn't break inflation after called" => sub {
     isa_ok $row->name, 'Mock::Inflate::Name';
 };
 
+subtest "deflation called twice" => sub {
+    my $row1 = $db->single(mock_inflate => { id => 1 });
+       $row1->update({ name => 'python' });
+    my $row2 = $row1->refetch;
+
+    isa_ok $row2->name, 'Mock::Inflate::Name';
+    is     $row2->name->name, 'python_deflate';
+};
+
 done_testing;
