@@ -22,7 +22,7 @@ subtest "deflation called twice" => sub {
     my $row = $db->single(mock_inflate => { id => 1 });
        $row->update({ name => 'python' });
 
-    my $row_hash = $dbh->selectrow_hashref('select name from mock_inflate');
+    my $row_hash = $dbh->selectrow_hashref('select name from mock_inflate where id = 1');
     is $row_hash->{name}, 'python_deflate';
 };
 
